@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salesforce Evaluation &amp; Proposal — Iskashitaa Gleaning Program</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <div class="brand"><a href="index.html">Iskashitaa Gleaning Program<br><small>Framework &amp; Implementation Reference</small></a></div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="case-for-change.html">Case for Change</a>
+      <a href="framework.html">Framework</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="roles.html">Roles &amp; Expectations</a>
+      <a href="salesforce.html" class="active">Salesforce Evaluation</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">05 · Build</p>
+    <h1>Salesforce evaluation &amp; proposal</h1>
+    <p class="lede">What's already built in Salesforce today, the gap against the target data model in the <a href="framework.html">Framework</a>, and the recommended path to close it — including how field data gets in without requiring every volunteer to be a licensed Salesforce user.</p>
+  </div>
+</header>
+
+<main id="main" class="container narrow">
+
+  <section>
+    <p class="section-kicker">Current State</p>
+    <h2 class="section-title">Less to build than expected</h2>
+    <p class="section-intro">Iskashitaa's Salesforce org (Classic NPSP on Sales Cloud, installed 2014) already has more relevant infrastructure than "basic contact management." A June 2026 audit of the live org — Object Manager, Account and Contact fields, installed packages, and Flows — found three things already in place that earlier planning assumed would need to be built from scratch.</p>
+
+    <div class="grid grid-3">
+      <div class="card c-green">
+        <h4>Volunteer tracking is already installed</h4>
+        <p><strong>Volunteers for Salesforce (V4S)</strong> is active. Volunteer Job, Volunteer Shift, and Volunteer Hours objects already exist, with rollup fields on Contact for hours and first/last volunteer date. This covers most of what a from-scratch "attendance" object would have had to do.</p>
+      </div>
+      <div class="card c-green">
+        <h4>Volunteer &amp; Driver fields already exist on Contact</h4>
+        <p>A <code>Refugee__c</code> flag, a waiver checkbox, and an orientation-date field are already on Contact — close to what Step 1 entry needs. Driver vetting fields (license, background check, insurance) already exist too.</p>
+      </div>
+      <div class="card c-amber">
+        <h4>Account has zero gleaning customization</h4>
+        <p>Every Account field today is standard or part of NPSP's donor tooling. Existing Record Types — Commercial Partner, Household Account, Organization — cover IskaShop and donor management, but none represent "a physical site with trees."</p>
+      </div>
+    </div>
+
+    <div class="callout c-green" style="margin-top:18px;">
+      <p><strong>Why this matters for the board:</strong> the volunteer-side data model — the part of this project closest to people and liability (waivers, background checks, hours) — is largely already built and in use. The build effort concentrates on the gleaning-specific objects (Tree, Harvest, Drop Off) that simply don't exist yet, not on rebuilding infrastructure that's already working.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-kicker">The Gap</p>
+    <h2 class="section-title">What needs to be added</h2>
+    <p class="section-intro">Six new objects, organized so the harvesting side (Tree → Harvest → Harvest Item) and the distribution side (Drop Off → Drop Off Item) share only Fruit Type between them — matching the data model on the <a href="framework.html">Framework</a> page.</p>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>New object</th><th>What it's for</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Fruit Type ("Crop")</td><td>Shared lookup table — fruit name, variety, season, typical yield range. Build first; everything else depends on it.</td></tr>
+          <tr><td class="strong">Tree</td><td>One record per tree on a property: fruit type, location, ladder required, estimated yield, and estimated yield remaining — the field that closes the capture-rate gap named on the Framework page.</td></tr>
+          <tr><td class="strong">Harvest ("Glean")</td><td>One record per harvest event: property, date, Harvest Lead, status, total lbs, distribution destination. Links to V4S's existing Volunteer Shift for attendance, rather than duplicating it.</td></tr>
+          <tr><td class="strong">Harvest Item ("Glean Item")</td><td>Per-tree results within a harvest: lbs by quality tier — distribution-quality, first-use, pet/animal feed, compost. The four-tier breakdown is built in from day one, closing the wiki's known quality-tier gap.</td></tr>
+          <tr><td class="strong">Drop Off</td><td>One record per distribution event: date, recipient organization, total lbs, distribution type.</td></tr>
+          <tr><td class="strong">Drop Off Item</td><td>Per-fruit-type detail within a Drop Off.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Existing objects — fields to add</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Object</th><th>Add</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Account</td><td>Access notes; preferred contact method; a new <strong>Property</strong> Record Type</td><td>Needed for the Harvest Lead's on-site reference and the homeowner outreach in the <a href="case-for-change.html">Case for Change</a>.</td></tr>
+          <tr><td class="strong">Contact</td><td><strong>Progression Step</strong> (Steps 1–11)</td><td>The single clearest gap — nothing tracking a volunteer's current step exists today. This is also the open item flagged in <a href="onboarding.html">Onboarding</a>.</td></tr>
+          <tr><td class="strong">Event (standard)</td><td>Related Harvest lookup</td><td>Supports a lightweight calendar view of harvests without duplicating data — see below.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Why a custom Harvest object, not a calendar Event</h3>
+    <p>Salesforce's standard Event object was considered as a simpler alternative to a custom Harvest object, since it comes with built-in calendar UI and free Outlook/Google sync. It doesn't hold up under the reporting this project is built around: Event can't be the master side of the roll-up that auto-totals a harvest's pounds from its Harvest Items, and Event's invitee list can't track hours or assigned role the way V4S's Volunteer Shift already does. The recommendation is to keep Harvest as its own object — for clean roll-ups and full reporting — and have it automatically generate a lightweight linked Event purely so staff have a shared calendar view. This is the same pattern V4S itself uses for Volunteer Shift, for the same reason.</p>
+  </section>
+
+  <section>
+    <p class="section-kicker">A Worked Example</p>
+    <h2 class="section-title">How one harvest flows through the model</h2>
+    <figure class="diagram">
+      <img src="assets/images/harvest-journey-example.png" alt="Worked example: a calendar Event links to a Harvest, which has two Harvest Items, which feed two Drop Offs with Drop Off Items, alongside a linked Volunteer Shift.">
+      <figcaption>A fictitious example harvest, traced end to end through the proposed object model — from scheduling through distribution.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <p class="section-kicker">Getting Field Data In</p>
+    <h2 class="section-title">From a paper sheet to a Salesforce record</h2>
+    <p class="section-intro">Today, Harvest Leads record data on paper and someone re-keys it afterward. That doesn't scale as harvest volume grows, and most field volunteers shouldn't need a Salesforce login. Four options were evaluated for closing that gap.</p>
+
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Option</th><th>Volunteer needs a login?</th><th>Same-day capture?</th><th>Build effort</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">1. Coordinator-operated entry form</td><td>No</td><td>No — depends on paper relay</td><td>None beyond the entry form itself</td></tr>
+          <tr><td class="strong">2. Bulk spreadsheet import</td><td>No</td><td>No</td><td>None — native Salesforce tool</td></tr>
+          <tr><td class="strong">3. Public mobile form, no login</td><td>No</td><td>Yes</td><td>One-time setup; no per-volunteer cost</td></tr>
+          <tr><td class="strong">4. iskashitaa-dev app integration</td><td>No</td><td>Yes</td><td>New form + API integration; separate codebase to maintain</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-blue">
+      <p><strong>Recommendation:</strong> start with Option 1 — it requires nothing beyond the data-entry form already being designed for Harvest Leads, and a coordinator can run it from the office using existing paper sheets. Layer in Option 2 for any harvest with high paper volume. Treat Option 3 as the real long-term fix: once the entry form is built and working for a coordinator, exposing the same form on a public, no-login mobile page is an incremental step — not a rebuild — and it's what actually removes the scaling ceiling as volunteer count grows. Option 4 stays available later if a dedicated branded app ever matters more than staying inside Salesforce, but isn't worth building before Option 3 has been tried.</p>
+    </div>
+    <p class="small">Licensing note: nonprofits receive 10 free Salesforce licenses through the Power of Us program — a coordinator seat comes out of that existing, no-cost pool. Option 3's public form requires no per-volunteer license at all.</p>
+  </section>
+
+  <section>
+    <p class="section-kicker">Sequencing</p>
+    <h2 class="section-title">Suggested build order</h2>
+    <p>Each step only depends on objects that already exist by the time it's built:</p>
+    <ol class="steps">
+      <li><h4>Fruit Type</h4><p>Shared lookup table — build first since Tree and Harvest Item both depend on it.</p></li>
+      <li><h4>Tree</h4><p>Linked to Property and Fruit Type.</p></li>
+      <li><h4>Harvest</h4><p>Linked to Property, Harvest Lead, and V4S's existing Volunteer Shift.</p></li>
+      <li><h4>Harvest Item</h4><p>Linked to Harvest, Tree, and Fruit Type — including the four-tier quality breakdown.</p></li>
+      <li><h4>Account updates</h4><p>Access notes, preferred contact method, new Property Record Type.</p></li>
+      <li><h4>Contact: Progression Step</h4><p>Closes the onboarding-tracking gap.</p></li>
+      <li><h4>Drop Off &amp; Drop Off Item</h4><p>Distribution side of the model.</p></li>
+      <li><h4>Automation</h4><p>Post-harvest thank-you email; Harvest Calendar sync to a linked Event.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <p class="section-kicker">Open Questions</p>
+    <h2 class="section-title">Decisions still needed before building</h2>
+    <div class="callout c-amber">
+      <ul style="margin:0;">
+        <li><strong>Does "Property" need its own Record Type,</strong> or can homeowner properties just be their existing Household Account with property fields added? Matters mainly if a homeowner could have multiple properties, or vice versa.</li>
+        <li><strong>Is the existing "Organization" type good enough for recipient orgs,</strong> or does Recipient Org need to be its own Record Type with a distinct layout?</li>
+        <li><strong>Reuse V4S, or build a from-scratch attendance object?</strong> This audit recommends reusing V4S since it's already installed and wired to Contact — the trade-off is that some of its screens use generic volunteer-org language rather than harvest-specific terms.</li>
+        <li><strong>How much does same-day field capture matter right now?</strong> If paper sitting for a few days before entry isn't currently causing problems, Option 3 above can reasonably wait.</li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="small">Source: <em>Salesforce_Field_Gap_Audit.md</em> and <em>Data_Capture_Strategy_Paper_to_Salesforce.md</em>, Iskashitaa Salesforce inspection &amp; implementation working files, audited 2026-06-22.</p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div>Iskashitaa Refugee Network — Gleaning Program Framework Reference · Prepared June 2026</div>
+    <div><a href="https://iskashitaa.org">iskashitaa.org</a> · Information@iskashitaa.org · 520-440-0100</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Operating &amp; Data Framework — Iskashitaa Gleaning Program</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <div class="brand"><a href="index.html">Iskashitaa Gleaning Program<br><small>Framework &amp; Implementation Reference</small></a></div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="case-for-change.html">Case for Change</a>
+      <a href="framework.html" class="active">Framework</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="roles.html">Roles &amp; Expectations</a>
+      <a href="salesforce.html">Salesforce Evaluation</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">02 · How</p>
+    <h1>The operating &amp; data framework</h1>
+    <p class="lede">How an efficient harvest runs end to end, the systems already in place, and the data those systems need to capture so the metrics in this framework are calculable — not just aspirational.</p>
+  </div>
+</header>
+
+<main id="main" class="container narrow">
+
+  <section>
+    <p class="section-kicker">How a Harvest Runs</p>
+    <h2 class="section-title">Harvest flow, scheduling to distribution</h2>
+    <p class="section-intro">Harvests run 2–3 days per week, year-round, drawing on community volunteers, refugee participants, and paid staff. Each harvest is led by a Harvest Lead responsible for site management, safety, and produce quality.</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Stage</th><th>Activity</th><th>Key People</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">1. Scheduling</td><td>Homeowner requests harvest; staff schedules date, assigns lead</td><td>Staff / Volunteer Coordinator</td></tr>
+          <tr><td class="strong">2. Pre-harvest</td><td>Volunteers sign in, waivers confirmed, roles assigned</td><td>Harvest Lead</td></tr>
+          <tr><td class="strong">3. Travel</td><td>Team travels from office to harvest site</td><td>Harvest Lead + crew (Driver)</td></tr>
+          <tr><td class="strong">4. On-site harvest</td><td>Picking, spotting, crating, weighing, recording, culling, cleanup</td><td>All roles — see <a href="roles.html">Roles &amp; Expectations</a></td></tr>
+          <tr><td class="strong">5. Homeowner close</td><td>Greet/thank homeowner, deliver donation envelope</td><td>Homeowner Interface role</td></tr>
+          <tr><td class="strong">6. Return &amp; unload</td><td>Transport produce back, unload, log in QuickBooks</td><td>Harvest Lead + Recorder</td></tr>
+          <tr><td class="strong">7. Storage</td><td>Produce stored; mid-week cull volunteer inspects during the week</td><td>Mid-Week Cull Volunteer</td></tr>
+          <tr><td class="strong">8. Distribution</td><td>Produce distributed to refugee families and partners weekly</td><td>Staff</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Produce destinations</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Condition</th><th>Destination</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Harvest-quality fruit</td><td>Distribution to refugee families; community partners; IskaShop preservation</td></tr>
+          <tr><td class="strong">Lightly damaged</td><td>First use — taken home by harvesters or their families</td></tr>
+          <tr><td class="strong">Moderately damaged / over-ripe</td><td>Pets (primarily chickens)</td></tr>
+          <tr><td class="strong">Significantly damaged / molding</td><td>Compost</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-kicker">Systems in Use Today</p>
+    <h2 class="section-title">Where harvest data lives right now</h2>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>System</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">QuickBooks</td><td>Harvest records: site address, date, pounds harvested, fruit type</td></tr>
+          <tr><td class="strong">Salesforce</td><td>Homeowner contacts; post-harvest email communication; annual impact reports</td></tr>
+          <tr><td class="strong">Sign-in sheet</td><td>Volunteer tracking per harvest; volunteer progression step (to be added)</td></tr>
+          <tr><td class="strong">Volunteer Hours Tracker</td><td>Self-reported volunteer hours (web form on iskashitaa.org)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>This split-system reality is the practical reason the program is moving toward Salesforce as the single system of record for harvest, volunteer, property, and distribution data — replacing QuickBooks for harvest tracking. The decision rationale and target data model are detailed in <a href="salesforce.html">Salesforce Evaluation &amp; Proposal</a>.</p>
+  </section>
+
+  <section>
+    <p class="section-kicker">The Data Model</p>
+    <h2 class="section-title">What the framework needs to capture</h2>
+    <p class="section-intro">The data model separates the inbound side (harvesting) from the outbound side (distribution), sharing only Fruit Type between them, and reuses the standard Account object for both homeowner properties and distribution recipients via Record Types.</p>
+
+    <figure class="diagram">
+      <img src="assets/images/object-relationship-diagram.png" alt="Object relationship diagram showing Account, Contact, Fruit Type, Tree, Harvest, Harvest Item, Drop Off, Drop Off Item, Event, and Volunteer Shift objects and how they connect.">
+      <figcaption>Target data model — new objects in green/red/orange, existing objects (Account, Contact, Event, Volunteer Shift) in blue. Full build detail in Salesforce Evaluation &amp; Proposal.</figcaption>
+    </figure>
+
+    <h3 class="sub-title">What the Harvest Lead enters — required vs. recommended</h3>
+    <p>This is the single most important data-discipline decision in the framework: nearly all field data enters Salesforce through one role, at one point, in 5–10 minutes per harvest.</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Field</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Property, harvest date, Harvest Lead, status</td><td><span class="badge badge-red">Required</span></td><td>Pre-populated from scheduling; status change to Completed triggers homeowner email</td></tr>
+          <tr><td class="strong">Total pounds harvested</td><td><span class="badge badge-red">Required</span></td><td>Core reporting metric</td></tr>
+          <tr><td class="strong">Distribution destination</td><td><span class="badge badge-red">Required</span></td><td>Refugee distribution / food pantry / preservation / compost — multi-select</td></tr>
+          <tr><td class="strong">Volunteer attendance</td><td><span class="badge badge-red">Required</span></td><td>Confirm pre-scheduled volunteers, mark no-shows, add walk-ins</td></tr>
+          <tr><td class="strong">Per-tree pounds + quality breakdown</td><td><span class="badge badge-red">Required</span></td><td>Distribution-quality / first-use / compost — drives every waste metric below</td></tr>
+          <tr><td class="strong">Progression assessment, free-text notes</td><td><span class="badge badge-blue">Recommended</span></td><td>Updates the volunteer's Contact record</td></tr>
+          <tr><td class="strong">Crate counts, duration, photos, satisfaction rating, weather</td><td><span class="badge badge-gray">Nice-to-have</span></td><td>Valuable but not required at launch</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-amber">
+      <p><strong>Two known gaps, worth closing before launch, not after:</strong> (1) there is no <em>Required</em> field today for estimated yield remaining on a tree, so pre-harvest loss can't be calculated — recommend promoting it to Required at least when a follow-up visit is flagged; (2) Harvest Item only has three quality-tier fields, but four exist operationally — pet/animal feed is currently uncounted or folded into first-use. Both are addressed in the build plan on the Salesforce page.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-kicker">Success Metrics Framework</p>
+    <h2 class="section-title">What the data is for</h2>
+    <p class="section-intro">Metrics are organized to mirror the data model above, so each one maps to a specific field rather than requiring a separate reporting system. Each is marked <span class="badge badge-green">Available now</span> if it's calculable from fields already Required, or <span class="badge badge-amber">Needs field</span> if it depends on a field that's currently Nice-to-Have or not yet modeled.</p>
+
+    <div class="grid grid-2">
+      <div class="card c-green">
+        <h4>Volume &amp; Recovery <span class="badge badge-green">All available now</span></h4>
+        <p>Pounds per tree / property / season / fruit type; meal equivalency (lbs ÷ 1.2, the Feeding America / ReFED standard).</p>
+      </div>
+      <div class="card c-amber">
+        <h4>Loss &amp; Waste <span class="badge badge-amber">Mixed</span></h4>
+        <p>Recovery rate and compost rate are available now. Secondary-use rate and capture rate (pre-harvest loss) need the two gaps above closed first.</p>
+      </div>
+      <div class="card c-green">
+        <h4>Cost &amp; Efficiency <span class="badge badge-green">Mostly available now</span></h4>
+        <p>Pounds per volunteer hour; properties per Harvest Lead per season. Cost per pound is a periodic finance calculation (QuickBooks/Salesforce together), not a per-harvest field.</p>
+      </div>
+      <div class="card c-green">
+        <h4>Mission &amp; Reach <span class="badge badge-green">All available now</span></h4>
+        <p>Refugee households served, distribution partner count, refugee volunteer hours, pounds distributed per recipient org.</p>
+      </div>
+      <div class="card c-green" style="grid-column: span 2;">
+        <h4>Property Relationship <span class="badge badge-green">Available now</span> <span class="small">(multi-year views need 2 seasons of data)</span></h4>
+        <p>Active properties per season, year-over-year homeowner retention, new properties added, multi-year yield trend per tree.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">Reporting cadence &amp; audience</h3>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Category</th><th>Primary Audience</th><th>Suggested Frequency</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Volume &amp; Recovery</td><td>Board, grant reports, annual impact report</td><td>Quarterly internal; annual external</td></tr>
+          <tr><td class="strong">Loss &amp; Waste</td><td>Internal operations (scheduling, crew sizing)</td><td>Per harvest / monthly review</td></tr>
+          <tr><td class="strong">Cost &amp; Efficiency</td><td>Board, major funders</td><td>Quarterly internal; annual external</td></tr>
+          <tr><td class="strong">Mission &amp; Reach</td><td>Grant narratives, donor communications</td><td>Annual, quarterly internal tracking</td></tr>
+          <tr><td class="strong">Property Relationship</td><td>Internal operations (recruiting, scheduling)</td><td>Annual, at season close</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Full detail and field-level mapping: Iskashitaa Gleaning Framework wiki, Section 10 (Success Metrics Framework); <em>Wiki_Reference_Data_Model_and_Metrics.md</em>.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div>Iskashitaa Refugee Network — Gleaning Program Framework Reference · Prepared June 2026</div>
+    <div><a href="https://iskashitaa.org">iskashitaa.org</a> · Information@iskashitaa.org · 520-440-0100</div>
+  </div>
+</footer>
+
+</body>
+</html>

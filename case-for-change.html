@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case for Change — Iskashitaa Gleaning Program</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <div class="brand"><a href="index.html">Iskashitaa Gleaning Program<br><small>Framework &amp; Implementation Reference</small></a></div>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="case-for-change.html" class="active">Case for Change</a>
+      <a href="framework.html">Framework</a>
+      <a href="onboarding.html">Onboarding</a>
+      <a href="roles.html">Roles &amp; Expectations</a>
+      <a href="salesforce.html">Salesforce Evaluation</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">01 · Why</p>
+    <h1>Strengthening the gleaning program: the case for investment</h1>
+    <p class="lede">For over 20 years, Iskashitaa's gleaning program has run on dedication and institutional knowledge. That foundation is strong — but the program's capacity to scale, reduce waste, and deliver consistent outcomes depends on formalizing what already works and closing the gaps that currently limit it.</p>
+  </div>
+</header>
+
+<main id="main" class="container narrow">
+
+  <section>
+    <p class="section-kicker">The Opportunity</p>
+    <h2 class="section-title">The engine of everything downstream</h2>
+    <p>Iskashitaa's gleaning program is the engine of everything downstream: the produce that reaches refugee families, the ingredients for IskaShop products, and the homeowner relationships that sustain the donor network. The program does not need to be reinvented — it needs the infrastructure to match the scale it has already reached.</p>
+  </section>
+
+  <section>
+    <p class="section-kicker">The Gaps</p>
+    <h2 class="section-title">What the gaps cost</h2>
+    <p class="section-intro">These are not signs of failure — they are the predictable result of a high-performing program that has grown without the infrastructure to match. The cost is real: produce lost to spoilage is food that does not reach a family; a homeowner who never hears back may not call again.</p>
+
+    <div class="grid grid-2">
+      <div class="card c-red">
+        <h4>No structured volunteer progression</h4>
+        <p>Volunteers sometimes take on tasks before they're ready, causing inconsistent picking, improper crating, and avoidable fruit damage.</p>
+      </div>
+      <div class="card c-red">
+        <h4>Inconsistent culling</h4>
+        <p>On-site culling depends on who leads that day, and no one inspects storage mid-week. Fruit harvested Friday can spoil before Tuesday distribution.</p>
+      </div>
+      <div class="card c-red">
+        <h4>No homeowner feedback loop</h4>
+        <p>Most homeowners receive no follow-up after their harvest. The relationship — and the financial ask — goes cold between visits.</p>
+      </div>
+      <div class="card c-red">
+        <h4>Incomplete data</h4>
+        <p>Gaps in QuickBooks and Salesforce make it impossible to report accurately on pounds by site, families served, or waste diverted.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-kicker">What the Research Shows</p>
+    <h2 class="section-title">Structure is what makes efficiency possible</h2>
+    <ul>
+      <li><strong>#1 success factor:</strong> a dedicated gleaning coordinator is the single most cited predictor of program success across U.S. gleaning organizations.<sup>1</sup></li>
+      <li><strong>Structured programs outperform:</strong> Salem Harvest (OR) averages 293,000 lbs/year with structured training and harvest leadership; Island Grown Initiative (MA) gleaned 56,842 lbs in 2025 — approximately 388,200 meals.<sup>2</sup> All operate with written role standards and trained harvest leads.</li>
+      <li><strong>Distribution timing matters:</strong> same-day or next-day distribution after large harvests is the field's most consistently cited tactic for reducing storage spoilage<sup>1</sup> — directly addressing Iskashitaa's Friday-harvest challenge.</li>
+      <li><strong>Efficiency compounds:</strong> gleaning organizations at scale reach costs as low as $0.024 per serving (Society of St. Andrew, ~40,000 volunteers, ~20M lbs/year).<sup>1</sup> Operational efficiency is achievable — but it requires systems, not just effort.</li>
+      <li><strong>Legal protection exists:</strong> the Bill Emerson Good Samaritan Food Donation Act protects good-faith food donors and gleaning organizations from most liability<sup>3</sup> — a key assurance for homeowners considering a donation.</li>
+    </ul>
+
+    <h3 class="sub-title">How comparable organizations compare</h3>
+    <p>Iskashitaa's research benchmarked seven gleaning organizations of varying scale and model. Three — Boston Area Gleaners, UpRoot Colorado, and Village Harvest — are the closest structural comparisons.</p>
+    <div class="table-wrap">
+      <table class="data">
+        <thead><tr><th>Organization</th><th>Model</th><th>Scale</th><th>Why it's relevant</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Boston Area Gleaners (MA)</td><td>Farms + Salesforce/GleanWeb</td><td>2.4M lbs gleaning inbound, FY2025</td><td>Most data-sophisticated comparable; direct ancestor of the Salesforce data model proposed here</td></tr>
+          <tr><td class="strong">UpRoot Colorado</td><td>Statewide network, regional hubs</td><td>500,000+ lbs since 2017; 275 volunteers</td><td>Closest residential-plus-farm regional model; runs a public Salesforce Experience Site</td></tr>
+          <tr><td class="strong">Village Harvest (Bay Area, CA)</td><td>Residential backyards only</td><td>2M+ lbs over 23 years; 4,000+ volunteers</td><td>Closest operational model — exclusively residential urban fruit, public harvest directory</td></tr>
+          <tr><td class="strong">City Fruit (Seattle, WA)</td><td>Urban fruit + tree stewardship</td><td>~30,000 lbs/year</td><td>Scale Iskashitaa has reached or is approaching</td></tr>
+          <tr><td class="strong">Food Forward (Los Angeles, CA)</td><td>Urban + wholesale, large-scale</td><td>94M lbs in 2024; $0.09/lb</td><td>Long-term efficiency benchmark, not a near-term target</td></tr>
+          <tr><td class="strong">Society of St. Andrew (National)</td><td>Faith-based, farm/field-focused</td><td>23M+ lbs/year; 29,000 volunteers</td><td>Scale and multi-decade sustainability benchmark</td></tr>
+          <tr><td class="strong">Harvest Against Hunger (WA)</td><td>Coalition / capacity-builder</td><td>40+ member orgs</td><td>A model for regional resource-hub positioning, if ever relevant</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">Full citations and detail: Iskashitaa Gleaning Framework wiki, Section 9 (Comparable Organizations).</p>
+  </section>
+
+  <section>
+    <p class="section-kicker">The Vision</p>
+    <h2 class="section-title">A season well run</h2>
+    <p class="section-intro">What a fully invested gleaning program looks like, from first harvest to year-end:</p>
+
+    <ol class="steps">
+      <li>
+        <h4>Early spring</h4>
+        <p>The volunteer coordinator reviews the returning volunteer roster and assigns each person their current progression step before the season opens. New volunteer inquiries flow through a simple online waiver — no one picks up a crate without baseline paperwork on file.</p>
+      </li>
+      <li>
+        <h4>First harvests</h4>
+        <p>Each crew arrives knowing their role. A Harvest Lead — experienced, assigned in advance — runs a two-minute briefing in the driveway before anyone touches a tree. New volunteers start at Step 1 (hand picking) alongside someone who's done it before. The ladder has a dedicated spotter who does nothing else.</p>
+      </li>
+      <li>
+        <h4>Mid-harvest</h4>
+        <p>The Recorder &amp; Culler works the crates as they fill, applying Iskashitaa's written culling criteria: harvest-quality fruit to the van, lightly damaged fruit set aside for harvesters to take home, anything molding to compost on-site. Weight is logged by address before departure. The Homeowner Interface volunteer closes every site with a personal thank-you and a donation envelope — two minutes that plant the seed of a lasting relationship.</p>
+      </li>
+      <li>
+        <h4>End of week</h4>
+        <p>Friday's harvest enters storage. On Tuesday, a dedicated mid-week cull volunteer spends 90 minutes inspecting what came in, pulling anything that deteriorated over the weekend. By Wednesday's distribution, families receive produce that is fresh, sorted, and safe.</p>
+      </li>
+      <li>
+        <h4>By mid-season</h4>
+        <p>The data picture is clear. QuickBooks shows pounds by address. Salesforce shows which homeowners haven't been contacted in over a year. Post-harvest thank-you emails go out within 48 hours of each completed harvest — personalized with the pounds their tree produced.</p>
+      </li>
+      <li>
+        <h4>Year-end</h4>
+        <p>Salesforce generates annual impact summaries for homeowner donors. Each one sees their tree's contribution, the total pounds gleaned this season, the families served, and the food kept from the landfill — with donation requests attached. Repeat harvest requests for next season come back before January.</p>
+      </li>
+    </ol>
+
+    <div class="callout c-green">
+      <p><strong>The program:</strong> has gleaned more pounds than the year before — not because the city grew more fruit, but because more sites are in the network, less produce is lost to spoilage, volunteers are more skilled and more retained, and every homeowner feels like a partner rather than a transaction.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-kicker">What Makes This Possible</p>
+    <h2 class="section-title">Five things this framework puts in place</h2>
+    <div class="grid grid-2">
+      <div class="card"><h4>Volunteer progression path</h4><p>Formalized roles, criteria, and tracking from Step 1 to Step 9.</p></div>
+      <div class="card"><h4>Dedicated culling standard</h4><p>Written criteria, an on-site reference card, and a mid-week storage cull volunteer.</p></div>
+      <div class="card"><h4>Homeowner communication</h4><p>A post-harvest email template and an annual impact summary, both generated from Salesforce.</p></div>
+      <div class="card"><h4>Data discipline</h4><p>Consistent entry by address, fruit type, and weight — every harvest, not just the ones someone remembers to log.</p></div>
+      <div class="card"><h4>Coordinator capacity</h4><p>A designated owner of the progression system and the harvester/homeowner relationships it depends on.</p></div>
+    </div>
+
+    <blockquote class="pull">
+      "The programs that outlast their founding volunteers are the ones that turned good instincts into written systems."
+      <cite>National Gleaning Project, <em>Models for Success</em> (Vermont Law School / USDA, 2017)</cite>
+    </blockquote>
+  </section>
+
+  <ol class="footnotes">
+    <li>National Gleaning Project, <em>Models for Success</em> (Vermont Law School / USDA, 2017)</li>
+    <li>Island Grown Initiative, Annual Report, 2025</li>
+    <li>42 U.S.C. § 1791 — Bill Emerson Good Samaritan Food Donation Act</li>
+  </ol>
+
+  <p class="small">Source: <em>Iskashitaa_Gleaning_Executive_Summary.docx</em> and Iskashitaa Gleaning Framework wiki, Sections 9 &amp; 11.</p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div>Iskashitaa Refugee Network — Gleaning Program Framework Reference · Prepared June 2026</div>
+    <div><a href="https://iskashitaa.org">iskashitaa.org</a> · Information@iskashitaa.org · 520-440-0100</div>
+  </div>
+</footer>
+
+</body>
+</html>
