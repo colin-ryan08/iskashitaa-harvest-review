@@ -414,6 +414,123 @@ table.data td strong, table.data td.strong { color: var(--ink); font-weight: 600
   margin: 0 0 14px;
 }
 
+/* ——— TIERS (roles.html) ——— */
+.tier-foundational { --tier: #0F7A66; --tier-bg: #EAF6F2; }
+.tier-experienced  { --tier: #4A3F8C; --tier-bg: #EFEDF7; }
+.tier-specialist   { --tier: #7A1F4B; --tier-bg: #F8EBF1; }
+.tier-support      { --tier: var(--navy); --tier-bg: var(--bg-navy); }
+
+.tier-section { margin-bottom: 30px; }
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 14px 20px;
+  border-radius: 10px;
+  background: var(--tier, var(--navy));
+  color: #fff;
+  margin-bottom: 8px;
+}
+.tier-header .tier-name {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tier-header .tier-tagline {
+  font-size: 13px;
+  opacity: 0.92;
+  font-weight: 500;
+  flex: 1 1 240px;
+}
+.tier-header .tier-stay {
+  font-size: 11.5px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.20);
+  padding: 5px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* tier-colored role cards */
+.role-card.in-tier .role-head { background: var(--tier-bg); }
+.role-card.in-tier .role-step { background: var(--tier); }
+.role-card.in-tier .role-head h3 { color: var(--tier); }
+
+/* advancement banner shown between tiers */
+.advance-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13.4px;
+  line-height: 1.5;
+  color: var(--ink-60);
+  padding: 12px 16px;
+  margin: 0 0 26px;
+  border-left: 3px solid var(--ink-40);
+  background: #F7F7F4;
+  border-radius: 0 8px 8px 0;
+}
+.advance-banner .arrow { font-size: 20px; color: var(--ink-40); line-height: 1; flex-shrink: 0; }
+.advance-banner strong { color: var(--navy); }
+
+/* ——— EMBEDDED VISUAL REFERENCE (role-reference.html) ——— */
+.embed-frame-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+  background: #e8e8e8;
+}
+.embed-frame {
+  display: block;
+  width: 100%;
+  min-width: 1040px;
+  height: 880px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+/* ——— BUTTON LINK ——— */
+.btn {
+  display: inline-block;
+  background: var(--blue);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  margin-right: 10px;
+  border: 1px solid var(--blue);
+}
+.btn:hover { background: var(--navy); border-color: var(--navy); }
+.btn-ghost {
+  background: transparent;
+  color: var(--blue);
+}
+.btn-ghost:hover { background: var(--badge-blue); color: var(--navy); }
+
+/* preview card linking to the visual reference (roles.html) */
+.ref-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--blue);
+  border-radius: 10px;
+  background: var(--bg-blue);
+  margin: 4px 0 8px;
+}
+.ref-callout .ref-text { flex: 1 1 320px; }
+.ref-callout .ref-text h3 { margin: 0 0 4px; font-size: 16px; color: var(--navy); }
+.ref-callout .ref-text p { margin: 0; font-size: 13.8px; color: var(--ink-60); }
+
 /* progression rail (small visual on roles + onboarding pages) */
 .rail {
   display: flex;

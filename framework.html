@@ -78,12 +78,12 @@
         <tbody>
           <tr><td class="strong">QuickBooks</td><td>Harvest records: site address, date, pounds harvested, fruit type</td></tr>
           <tr><td class="strong">Salesforce</td><td>Homeowner contacts; post-harvest email communication; annual impact reports</td></tr>
-          <tr><td class="strong">Sign-in sheet</td><td>Volunteer tracking per harvest; volunteer progression step (to be added)</td></tr>
+          <tr><td class="strong">Sign-in sheet</td><td>Volunteer tracking per harvest; volunteer tier &amp; roles (to be added)</td></tr>
           <tr><td class="strong">Volunteer Hours Tracker</td><td>Self-reported volunteer hours (web form on iskashitaa.org)</td></tr>
         </tbody>
       </table>
     </div>
-    <p>This split-system reality is the practical reason the program is moving toward Salesforce as the single system of record for harvest, volunteer, property, and distribution data — replacing QuickBooks for harvest tracking. The decision rationale and target data model are detailed in <a href="salesforce.html">Salesforce Evaluation &amp; Proposal</a>.</p>
+    <p>This split-system reality is the practical reason the program is moving toward Salesforce as the single system of record for harvest, volunteer, property, and distribution data — replacing QuickBooks as source of truth for harvest tracking (data sync'ed to Quickbooks where needed). The decision rationale and target data model are detailed in <a href="salesforce.html">Salesforce Evaluation &amp; Proposal</a>.</p>
   </section>
 
   <section>
@@ -107,14 +107,14 @@
           <tr><td class="strong">Distribution destination</td><td><span class="badge badge-red">Required</span></td><td>Refugee distribution / food pantry / preservation / compost — multi-select</td></tr>
           <tr><td class="strong">Volunteer attendance</td><td><span class="badge badge-red">Required</span></td><td>Confirm pre-scheduled volunteers, mark no-shows, add walk-ins</td></tr>
           <tr><td class="strong">Per-tree pounds + quality breakdown</td><td><span class="badge badge-red">Required</span></td><td>Distribution-quality / first-use / compost — drives every waste metric below</td></tr>
-          <tr><td class="strong">Progression assessment, free-text notes</td><td><span class="badge badge-blue">Recommended</span></td><td>Updates the volunteer's Contact record</td></tr>
+          <tr><td class="strong">Tier/role readiness assessment, free-text notes</td><td><span class="badge badge-blue">Recommended</span></td><td>Updates the volunteer's Contact record</td></tr>
           <tr><td class="strong">Crate counts, duration, photos, satisfaction rating, weather</td><td><span class="badge badge-gray">Nice-to-have</span></td><td>Valuable but not required at launch</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="callout c-amber">
-      <p><strong>Two known gaps, worth closing before launch, not after:</strong> (1) there is no <em>Required</em> field today for estimated yield remaining on a tree, so pre-harvest loss can't be calculated — recommend promoting it to Required at least when a follow-up visit is flagged; (2) Harvest Item only has three quality-tier fields, but four exist operationally — pet/animal feed is currently uncounted or folded into first-use. Both are addressed in the build plan on the Salesforce page.</p>
+      <p><strong>One item worth closing before launch, not after:</strong>There is no <em>Required</em> field today for estimated yield remaining on a tree, so pre-harvest loss can't be calculated — recommend promoting it to Required at least when a follow-up visit is flagged.  If we want to estimate future years, this might be needed if it is somewhat common occurance.</p>
     </div>
   </section>
 

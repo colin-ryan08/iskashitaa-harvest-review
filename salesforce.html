@@ -47,7 +47,7 @@
       </div>
       <div class="card c-green">
         <h4>Volunteer &amp; Driver fields already exist on Contact</h4>
-        <p>A <code>Refugee__c</code> flag, a waiver checkbox, and an orientation-date field are already on Contact — close to what Step 1 entry needs. Driver vetting fields (license, background check, insurance) already exist too.</p>
+        <p>A <code>Refugee__c</code> flag, a waiver checkbox, and an orientation-date field are already on Contact — close to what Hand Picker entry needs. Driver vetting fields (license, background check, insurance) already exist too.</p>
       </div>
       <div class="card c-amber">
         <h4>Account has zero gleaning customization</h4>
@@ -85,7 +85,7 @@
         <thead><tr><th>Object</th><th>Add</th><th>Why</th></tr></thead>
         <tbody>
           <tr><td class="strong">Account</td><td>Access notes; preferred contact method; a new <strong>Property</strong> Record Type</td><td>Needed for the Harvest Lead's on-site reference and the homeowner outreach in the <a href="case-for-change.html">Case for Change</a>.</td></tr>
-          <tr><td class="strong">Contact</td><td><strong>Progression Step</strong> (Steps 1–11)</td><td>The single clearest gap — nothing tracking a volunteer's current step exists today. This is also the open item flagged in <a href="onboarding.html">Onboarding</a>.</td></tr>
+          <tr><td class="strong">Contact</td><td><strong>Current Tier</strong> (Foundational / Experienced / Specialist) and <strong>Roles Cleared</strong></td><td>The single clearest gap — nothing tracking a volunteer's current tier or the roles they're cleared for exists today. This is also the open item flagged in <a href="onboarding.html">Onboarding</a>.</td></tr>
           <tr><td class="strong">Event (standard)</td><td>Related Harvest lookup</td><td>Supports a lightweight calendar view of harvests without duplicating data — see below.</td></tr>
         </tbody>
       </table>
@@ -113,18 +113,54 @@
       <table class="data">
         <thead><tr><th>Option</th><th>Volunteer needs a login?</th><th>Same-day capture?</th><th>Build effort</th></tr></thead>
         <tbody>
-          <tr><td class="strong">1. Coordinator-operated entry form</td><td>No</td><td>No — depends on paper relay</td><td>None beyond the entry form itself</td></tr>
+          <tr><td class="strong">1. Coordinator-operated Screen Flow</td><td>No</td><td>No — depends on paper relay</td><td>None beyond the Screen Flow itself</td></tr>
           <tr><td class="strong">2. Bulk spreadsheet import</td><td>No</td><td>No</td><td>None — native Salesforce tool</td></tr>
-          <tr><td class="strong">3. Public mobile form, no login</td><td>No</td><td>Yes</td><td>One-time setup; no per-volunteer cost</td></tr>
+          <tr><td class="strong">3. Public mobile Screen Flow, no login</td><td>No</td><td>Yes</td><td>Same flow as Option 1, exposed on a public page</td></tr>
           <tr><td class="strong">4. iskashitaa-dev app integration</td><td>No</td><td>Yes</td><td>New form + API integration; separate codebase to maintain</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="callout c-blue">
-      <p><strong>Recommendation:</strong> start with Option 1 — it requires nothing beyond the data-entry form already being designed for Harvest Leads, and a coordinator can run it from the office using existing paper sheets. Layer in Option 2 for any harvest with high paper volume. Treat Option 3 as the real long-term fix: once the entry form is built and working for a coordinator, exposing the same form on a public, no-login mobile page is an incremental step — not a rebuild — and it's what actually removes the scaling ceiling as volunteer count grows. Option 4 stays available later if a dedicated branded app ever matters more than staying inside Salesforce, but isn't worth building before Option 3 has been tried.</p>
+      <p><strong>Recommendation:</strong> start with Option 1 — it requires nothing beyond the data-entry Screen Flow already being designed for Harvest Leads, and a coordinator can run it from the office using existing paper sheets. Layer in Option 2 for any harvest with high paper volume. Treat Option 3 as the real long-term fix: because Options 1 and 3 are the <em>same Screen Flow</em> surfaced in two places, exposing it on a public, no-login mobile page is an incremental step — not a rebuild — and it's what actually removes the scaling ceiling as volunteer count grows. Option 4 stays available later if a dedicated branded app ever matters more than staying inside Salesforce, but isn't worth building before Option 3 has been tried.</p>
     </div>
     <p class="small">Licensing note: nonprofits receive 10 free Salesforce licenses through the Power of Us program — a coordinator seat comes out of that existing, no-cost pool. Option 3's public form requires no per-volunteer license at all.</p>
+  </section>
+
+  <section>
+    <p class="section-kicker">The Mechanism</p>
+    <h2 class="section-title">Build it once as a Screen Flow</h2>
+    <p class="section-intro">Both the coordinator workflow and the mobile form above are the same underlying tool: a <strong>Salesforce Screen Flow</strong>. A Screen Flow is a guided, multi-step form built entirely with clicks, not code — a sequence of screens that ask questions, show only the fields that apply, validate the answers, and then create or update records behind the scenes. The reason this matters here is reuse: one flow, built once, is surfaced wherever data needs to enter the system, so the coordinator process and the field-mobile process never diverge into two things to maintain.</p>
+
+    <div class="grid grid-3">
+      <div class="card c-blue">
+        <h4>Coordinator, at the desk</h4>
+        <p>The flow is embedded on the Harvest record page. A coordinator works through it from the office using the paper sheet — the same guided screens, validated as they go, replacing manual field-by-field re-keying.</p>
+      </div>
+      <div class="card c-blue">
+        <h4>Harvest Lead, in the field</h4>
+        <p>The identical flow runs in the Salesforce mobile app on a phone — large tap targets, picklists instead of typing, captured on-site the moment the harvest ends. Runs on a free Power of Us seat.</p>
+      </div>
+      <div class="card c-blue">
+        <h4>Anyone, no login</h4>
+        <p>The same flow placed on a public, unauthenticated page (a one-time Experience Cloud setup) becomes a mobile form a volunteer can open from a link — no Salesforce license, same validation, same records created.</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">An example: the "Log This Harvest" flow</h3>
+    <p>To make the benefit concrete, here is how a single guided flow would walk a Harvest Lead through closing out a harvest on their phone — each numbered screen is one tap-through step, and the records it writes are noted in italics:</p>
+    <ol class="steps">
+      <li><h4>Confirm the harvest</h4><p>Property and date are pre-filled from the schedule; the lead just confirms. <em>Opens the existing Harvest record.</em></p></li>
+      <li><h4>Confirm the crew</h4><p>Pre-scheduled volunteers appear as checkboxes — confirm attendance, mark no-shows, add walk-ins. <em>Updates V4S Volunteer Shifts; no separate attendance object needed.</em></p></li>
+      <li><h4>Enter pounds, tree by tree</h4><p>The flow loops once per tree on the property. For each, it asks pounds by quality tier — distribution-quality, first-use, pet/animal feed, compost. Ladder-required trees show an extra prompt; others skip it. <em>Creates one Harvest Item per tree, with the four-tier breakdown built in.</em></p></li>
+      <li><h4>Set the destination</h4><p>Total pounds are summed automatically and shown back for a sanity check; the lead picks the distribution destination from a list. <em>Writes totals and destination to the Harvest.</em></p></li>
+      <li><h4>Note volunteer readiness</h4><p>An optional screen lets the lead flag any volunteer ready to take on a new role or move a tier, plus free-text notes. <em>Updates the volunteer's Contact (Current Tier / Roles Cleared).</em></p></li>
+      <li><h4>Review &amp; submit</h4><p>One summary screen, then submit. Setting the Harvest to Completed <em>triggers the post-harvest thank-you email to the homeowner — no extra step.</em></p></li>
+    </ol>
+
+    <div class="callout c-green">
+      <p><strong>Why a Screen Flow earns its place here:</strong> validation is built in, so a harvest can't be submitted without its quality breakdown and a tree can't be skipped by accident; picklists replace free-text, keeping reporting clean; conditional screens mean the lead only sees questions that apply to the tree in front of them; and the whole thing is maintainable by an admin with no code. Most importantly, the coordinator form, the field-mobile form, and the public no-login form are the <em>same flow</em> — so Option 3 above really is an incremental surface change, not a second system to build and keep in sync.</p>
+    </div>
   </section>
 
   <section>
@@ -137,8 +173,9 @@
       <li><h4>Harvest</h4><p>Linked to Property, Harvest Lead, and V4S's existing Volunteer Shift.</p></li>
       <li><h4>Harvest Item</h4><p>Linked to Harvest, Tree, and Fruit Type — including the four-tier quality breakdown.</p></li>
       <li><h4>Account updates</h4><p>Access notes, preferred contact method, new Property Record Type.</p></li>
-      <li><h4>Contact: Progression Step</h4><p>Closes the onboarding-tracking gap.</p></li>
+      <li><h4>Contact: Current Tier &amp; Roles Cleared</h4><p>Closes the onboarding-tracking gap.</p></li>
       <li><h4>Drop Off &amp; Drop Off Item</h4><p>Distribution side of the model.</p></li>
+      <li><h4>"Log This Harvest" Screen Flow</h4><p>Built once the objects exist; embedded for the coordinator first, then exposed on a public mobile page (Option 3).</p></li>
       <li><h4>Automation</h4><p>Post-harvest thank-you email; Harvest Calendar sync to a linked Event.</p></li>
     </ol>
   </section>
